@@ -1,12 +1,3 @@
-/**
-	2. 스토리 페이지
-	(1) 스토리 로드하기
-	(2) 스토리 스크롤 페이징하기
-	(3) 좋아요, 안좋아요
-	(4) 댓글쓰기
-	(5) 댓글삭제
- */
-// (0) 현재 로그인한 사용자 아이디 받기
 let principalId = $("#principalId").val();
 
 // (1) 스토리 로드하기
@@ -33,10 +24,12 @@ function getStoryItem(image) {
 	let item = `<div class="story-list__item">
 	<div class="sl__item__header">
 		<div>
+		<a href="user/${image.user.username}">
 			<img class="profile-image" src="/upload/${image.user.profileImageUrl}"
 				onerror="this.src='/images/person.jpeg'" />
+		</a>
 		</div>
-		<div>${image.user.username}</div>
+		<div style="cursor: pointer;"  onclick="location.href='user/${image.user.username}';">${image.user.username}</div>
 	</div>
 
 	<div class="sl__item__img">
@@ -195,13 +188,13 @@ function deleteComment(commentId) {
 		type: "delete",
 		url: `/api/comment/${commentId}`,
 		dataType: "json"
-	}).done(res=>{
+	}).done(res => {
 		console.log("성공", res);
 		$(`#storyCommentItem-${commentId}`).remove();
-	}).fail(error=>{
+	}).fail(error => {
 		console.log("실패", error);
 	});
-	
+
 }
 
 

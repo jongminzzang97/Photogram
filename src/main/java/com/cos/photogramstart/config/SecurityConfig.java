@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.cos.photogramstart.config.oauth.OAuth2DeatilsService;
+import com.cos.photogramstart.config.oauth.OAuth2DetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,9 +16,9 @@ import lombok.RequiredArgsConstructor;
 @Configuration // Ioc
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	private final OAuth2DeatilsService oAuth2DeatilsService;
+	private final OAuth2DetailsService oAuth2DetailsService;
 	
-	@Bean
+	@Bean 
 	public BCryptPasswordEncoder encode() {
 		return new BCryptPasswordEncoder();
 	}
@@ -39,6 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 			.oauth2Login()		//form 로그인도 하는데, oauth2Login도 할꺼다.
 			.userInfoEndpoint()	// oauth2 로그인을 하면 최종응답을(회원정보를) 바로 받을 수 있다.
-			.userService(oAuth2DeatilsService);
+			.userService(oAuth2DetailsService);
 	}
 }

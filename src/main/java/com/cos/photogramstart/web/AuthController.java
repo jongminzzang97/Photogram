@@ -48,6 +48,5 @@ public class AuthController {
 		User user = signupDto.toEntity();
 		User userEntity = authService.회원가입(user);
 		return "auth/signin";
-
 	}
 }

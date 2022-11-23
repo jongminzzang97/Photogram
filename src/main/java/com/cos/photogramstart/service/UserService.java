@@ -88,6 +88,38 @@ public class UserService {
 		return dto;
 	}
 	
+	
+	@Transactional(readOnly = true)
+	public UserProfileDto 회원프로필byUsername(String username, int principalId) {
+		// SELECT * FROM image WHERE userID = :userId
+		// 쿼리로 한다면 위와같이 하면 된다.
+		// JPA를 이용해서 할 것
+		
+		UserProfileDto dto = new UserProfileDto();
+		User userEntity = userRepository.findByUsername(username);
+		dto.setUser(userEntity);
+		
+		int pageUserid = userEntity.getId();
+		dto.setPageOwnerState(pageUserid==principalId? true : false); 
+		dto.setImageCount(userEntity.getImages().size());
+		int subscribeState = subscribeRepository.mSubscripbeState(principalId, pageUserid);
+		int followerCount = subscribeRepository.mfollowerCount(pageUserid);
+		int followingCount = subscribeRepository.mfollowingCount(pageUserid);
+
+		dto.setSubscribeState(subscribeState == 1);
+		dto.setFollowerCount(followerCount);
+		dto.setFollowingCount(followingCount);
+		
+		// 좋아요 카운트 추가
+		userEntity.getImages().forEach((image)->{
+			image.setLikeCount(image.getLikes().size());
+			System.out.println(image.getLikes().size());
+		});
+		
+		
+		return dto;
+	}
+	
 	@Transactional
 	public User 회원수정(int id, User user) {
 		// 1. 영속화

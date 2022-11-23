@@ -27,8 +27,8 @@ public class PrincipalDetailsService implements UserDetailsService{
 			return null;
 		}
 		else {
+			System.out.println(userEntity + "생성완료");
 			return new PrincipalDetails(userEntity);
 		}
 	}
-	
 }

@@ -77,5 +77,4 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 		// TODO Auto-generated method stub
 		return (String) attributes.get("name");
 	}
-
 }
