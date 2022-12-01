@@ -18,7 +18,6 @@ public class LikesService {
 	public void 좋아요(int imageId, int principalId) {
 		//		Likes like = new Likes(); 
 		//		...
-		
 		likesRepository.mLikes(imageId, principalId);
 	}
 	

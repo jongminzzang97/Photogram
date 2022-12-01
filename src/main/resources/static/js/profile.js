@@ -13,27 +13,27 @@
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
 function toggleSubscribe(toUserId, obj) {
 
-	if ($(obj).text() === "구독취소") {
-		console.log("구독취소실행");
+	if ($(obj).text() === "팔로잉") {
+		console.log("언팔로우 실행");
 		console.log(toUserId);
 		$.ajax({
 			type: "delete",
 			url: "/api/subscribe/" + toUserId,
 			datatype: "json"
 		}).done(res =>  {
-			$(obj).text("구독하기");
+			$(obj).text("팔로우");
 			$(obj).toggleClass("blue");
 		}).fail(error =>  {
 			console.log("구독취소가 실패했습니다.")
 		});
 	} else {
-		console.log("구독하기실행")
+		console.log("팔로우 실행")
 		$.ajax({
 			type: "post",
 			url: "/api/subscribe/"  + toUserId,
 			datatype: "json"
 		}).done(res =>  {
-			$(obj).text("구독취소");
+			$(obj).text("팔로잉");
 			$(obj).toggleClass("blue");
 		}).fail(error =>  {
 			console.log("구독하기가 실패했습니다.")
@@ -41,11 +41,11 @@ function toggleSubscribe(toUserId, obj) {
 	}
 }
 
-// (2) 구독자 정보  모달 보기
-function subscribeInfoModalOpen(pageUserId) {
+
+function followerInfoModalOpen(pageUserId) {
 	$(".modal-subscribe").css("display", "flex"); //modal-subscribe를 찾아서 화면에 보여준다.
 	$.ajax({
-		url: `/api/user/${pageUserId}/subscribe`,
+		url: `/api/user/${pageUserId}/follower`,
 		datatype: "json"
 	}).done(res =>  {
 		console.log(res);
@@ -55,9 +55,27 @@ function subscribeInfoModalOpen(pageUserId) {
 			$("#subscribeModalList").append(item);
 		});
 	}).fail(error =>  {
-		console.log("구독정보 불러오기 오류", error)
+		console.log("팔로워 오류", error)
 	});
 }
+
+function followingInfoModalOpen(pageUserId) {
+	$(".modal-subscribe").css("display", "flex"); //modal-subscribe를 찾아서 화면에 보여준다.
+	$.ajax({
+		url: `/api/user/${pageUserId}/following`,
+		datatype: "json"
+	}).done(res =>  {
+		console.log(res);
+
+		res.data.forEach((u) =>  {
+			let item = getSubscribeModalItem(u);
+			$("#subscribeModalList").append(item);
+		});
+	}).fail(error =>  {
+		console.log("팔로잉 오류", error)
+	});
+}
+
 
 
 function getSubscribeModalItem(u) {
@@ -71,9 +89,9 @@ function getSubscribeModalItem(u) {
 	<div class="subscribe__btn">`;
 	if (!u.equalUserState) {
 		if (u.subscribeState) {
-			item += `<button class="cta blue" onclick="toggleSubscribe(${u.userId}, this)">구독취소</button>`
+			item += `<button class="cta " onclick="toggleSubscribe(${u.userId}, this)">팔로잉</button>`
 		} else {
-			item += `<button class="cta" onclick="toggleSubscribe(${u.userId}, this)">구독하기</button>`
+			item += `<button class="cta blue" onclick="toggleSubscribe(${u.userId}, this)">팔로우</button>`
 		}
 	}
 	item += `

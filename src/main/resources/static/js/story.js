@@ -30,6 +30,7 @@ function getStoryItem(image) {
 		</a>
 		</div>
 		<div style="cursor: pointer;"  onclick="location.href='user/${image.user.username}';">${image.user.username}</div>
+		<button type="button" onClick="deleteImage(${image.id})">삭제</button>
 	</div>
 
 	<div class="sl__item__img">
@@ -198,6 +199,19 @@ function deleteComment(commentId) {
 }
 
 
+function deleteImage(imageId){
+	$.ajax({
+		type:"delete",
+		url: `/api/image/${imageId}`,
+		dataType: "json"
+	}).done(res => {
+		console.log("성공", res);
+		// $(`#storyCommentItem-${commentId}`).remove();
+	}).fail(error => {
+		console.log("실패", error);
+	});
+
+}
 
 
 

@@ -3,7 +3,9 @@ package com.cos.photogramstart.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 
 import lombok.RequiredArgsConstructor;
@@ -76,4 +79,18 @@ public class ImageService {
 		return imageRepository.mPopular();
 	}
 	
+	@Transactional
+	public void 이미지삭제(int imageId, int principalId) {
+		Image image = imageRepository.findById(imageId).orElseThrow(() -> {throw new CustomApiException("존재하지 않는 이미지 입니다.");});
+		if (principalId == image.getUser().getId()) {
+			try {
+				imageRepository.delete(image);
+			} catch (Exception e) {
+				throw new CustomApiException(e.getMessage());
+			}
+		}
+		else {
+			throw new CustomApiException("해당 게시물의 주인이 아닙니다.");
+		}
+	}
 }

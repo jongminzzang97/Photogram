@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cos.photogramstart.domain.User.User;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.AuthService;
+import com.cos.photogramstart.service.SubscribeService;
 import com.cos.photogramstart.web.dto.auth.SignupDto;
 
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,9 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
 	private static final Logger log = LoggerFactory.getLogger(AuthController.class);
-
+	
 	private final AuthService authService;
+	private final SubscribeService subscribeService;
 //	public AuthController(AuthService authService) {
 //		this.authService = authService;
 //	}

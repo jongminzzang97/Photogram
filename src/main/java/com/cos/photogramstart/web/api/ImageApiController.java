@@ -29,6 +29,7 @@ public class ImageApiController {
 	
 	private final ImageService imageService;
 	private final LikesService likesService;
+
 	
 	@GetMapping("/api/image")
 	public ResponseEntity<?> imageStroy(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -47,5 +48,11 @@ public class ImageApiController {
 	public ResponseEntity<?> unlikes(@PathVariable int imageId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		likesService.좋아요취소(imageId, principalDetails.getUser().getId());
 		return new ResponseEntity<>(new CMRespDto<>(1, "좋아요취소성공", null), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/api/image/{imageId}")
+	public ResponseEntity<?> imageDelete(@PathVariable int imageId, @AuthenticationPrincipal PrincipalDetails principalDetails){
+		imageService.이미지삭제(imageId, principalDetails.getUser().getId());
+		return new ResponseEntity<>(new CMRespDto<>(1, "이미지 삭제 성공", null), HttpStatus.OK);
 	}
 }

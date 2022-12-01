@@ -35,10 +35,10 @@
 					<c:otherwise>
 						<c:choose>
 							<c:when test="${dto.subscribeState}">
-								<button class="cta blue" onclick="toggleSubscribe(${dto.user.id}, this)">구독취소</button>
+								<button class="cta " onclick="toggleSubscribe(${dto.user.id}, this)">팔로잉</button>
 							</c:when>
 							<c:otherwise>
-								<button class="cta" onclick="toggleSubscribe(${dto.user.id}, this)">구독하기</button>
+								<button class="cta blue" onclick="toggleSubscribe(${dto.user.id}, this)">팔로우</button>
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
@@ -53,9 +53,9 @@
 				<ul>
 					<li><a href=""> 게시물<span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen();"> 팔로워<span>${dto.followerCount}</span>
+					<li><a href="javascript:followerInfoModalOpen(${dto.user.id});"> 팔로워<span>${dto.followerCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});"> 팔로잉<span>${dto.followingCount}</span>
+					<li><a href="javascript:followingInfoModalOpen(${dto.user.id});"> 팔로잉<span>${dto.followingCount}</span>
 					</a></li>
 				</ul>
 			</div>

@@ -45,12 +45,18 @@ public class UserApiController {
 	}
 	
 	
-	@GetMapping("/api/user/{pageUserId}/subscribe")
-	public ResponseEntity<?> subscirbeList(@PathVariable int pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-		List<SubscribeDto> subscribeDto = subscribeService.구독리스트(principalDetails.getUser().getId(), pageUserId);
-		return new ResponseEntity<>(new CMRespDto<>(1, "구독자 정보 리스트 불러오기 성공", subscribeDto), HttpStatus.OK);
+	@GetMapping("/api/user/{pageUserId}/following")
+	public ResponseEntity<?> followingList(@PathVariable int pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		List<SubscribeDto> subscribeDto = subscribeService.팔로잉리스트(principalDetails.getUser().getId(), pageUserId);
+		return new ResponseEntity<>(new CMRespDto<>(1, "팔로잉리스트 불러오기 성공", subscribeDto), HttpStatus.OK);
 	}
 	
+	@GetMapping("/api/user/{pageUserId}/follower")
+	public ResponseEntity<?> followerList(@PathVariable int pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		List<SubscribeDto> subscribeDto = subscribeService.팔로워리스트(principalDetails.getUser().getId(), pageUserId);
+		System.out.println(subscribeDto);
+		return new ResponseEntity<>(new CMRespDto<>(1, "팔로워리스트 불러오기 성공", subscribeDto), HttpStatus.OK);
+	}
 	
 	@PutMapping("/api/user/{id}")
 	public CMRespDto<?> update(@PathVariable int id, 
@@ -64,6 +70,5 @@ public class UserApiController {
 			// 응답시에 userEntity의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다. (MessageConverter)
 			// getImages에서 또 User가 호출되는...
 			return new CMRespDto<>(1, "회원수정완료", userEntity); 
-			
 	}
 }

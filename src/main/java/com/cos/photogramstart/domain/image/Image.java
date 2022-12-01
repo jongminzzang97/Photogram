@@ -55,7 +55,7 @@ public class Image {
 	private int likeCount;
 	
 	// 이미지 댓글 -> lazy loading
-	@JsonIgnoreProperties({"image"})
+	@JsonIgnoreProperties({"image", "comments"})
 	@OneToMany(mappedBy = "image")
 	private List<Comment> comments;
 	

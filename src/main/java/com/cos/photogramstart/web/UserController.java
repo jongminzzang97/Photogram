@@ -25,7 +25,6 @@ public class UserController {
 	public String profile(@PathVariable String pageUsername, Model model,  @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		UserProfileDto dto = userService.회원프로필byUsername(pageUsername, principalDetails.getUser().getId());
 		model.addAttribute("dto", dto);
-		System.out.println(dto.getUser().getImages());
 		return "user/profile";
 	}
 	

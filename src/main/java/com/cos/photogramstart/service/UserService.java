@@ -84,7 +84,6 @@ public class UserService {
 			System.out.println(image.getLikes().size());
 		});
 		
-		
 		return dto;
 	}
 	
