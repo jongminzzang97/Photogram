@@ -15,7 +15,7 @@ Springboot를 이용한 인스타그램 클론코딩
     - BCryptPasswordEncoder를 이용하여 Password를 암호화
 
 - 로그인
-    - JWT 로그인 처리
+    - Spring Security 로그인 처리
 
 - 프로필 페이지
     - 회원 정보 수정
